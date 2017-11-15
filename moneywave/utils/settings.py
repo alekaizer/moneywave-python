@@ -81,7 +81,7 @@ class Settings:
         self.card_tokenization = "/v1/transfer/charge/tokenize/card"
         self.card_enquiry = "/v1/user/card/check"
         self.reporting = "/v1/report/transactions"
-        self.transaction_get_all = "/v1/get-charge"
+        self.transaction_get_total = "/v1/get-charge"
         self.transaction_retrial = "/v1/transfer/disburse/retry"
         self.transaction_previous_card = "/v1/transfer/{0}"
         self.transaction_status = "/v1/transfer/charge/status"
