@@ -13,8 +13,8 @@ r = API.Wallet.get_balance()
 pp.pprint(r)
 
 print("======= CREATE SUB WALLET =======")
-#r = API.Wallet.create_sub_wallet("Achille", "cequejeveux", "cus_0399292", "NGN")
-#pp.pprint(r)
+r = API.Wallet.create_sub_wallet("Achille", "cequejeveux", "cus_0399292", "NGN")
+pp.pprint(r)
 
 
 print("======= CREATE CARD ========")
