@@ -13,14 +13,14 @@ class Resource:
         return self.util.send_request(self.util.settings.account_verification,
                                       data)
 
-    def create_card(self, card_number, expiry_year, expiry_month, cvv):
+    def create_card(self, card_number, expiry_month, expiry_year, cvv):
         data = {"card_no": card_number, "expiry_year": expiry_year,
                 "expiry_month": expiry_month, "cvv": cvv}
         return self.util.send_request(self.util.settings.card_tokenization,
                                       data)
 
     def card_details(self, card_number):
-        data = {"card_no": card_number}
+        data = {"cardNumber": card_number}
         return self.util.send_request(self.util.settings.card_enquiry, data)
 
     def get_reports(self, status, amount, flutterwave_ref, ref, currency="NGN",
