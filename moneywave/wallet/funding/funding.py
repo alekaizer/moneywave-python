@@ -67,5 +67,5 @@ class Funding:
         return self.util.send_request(self.util.settings.funding_pay, data)
 
     def card_details(self, card_number):
-        data = {"card_no": card_number}
+        data = {"cardNumber": card_number}
         return self.util.send_request(self.util.settings.card_enquiry, data)
