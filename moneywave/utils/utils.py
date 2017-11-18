@@ -24,7 +24,8 @@ class Util:
         else:
             self.token = None
 
-            raise Exception(self.settings.get_error_msg(response.status_code))
+            raise Exception(self.settings.get_error_msg(response.status_code),
+                            response.json())
 
     def resolve_url(self, endpoint):
         return self.settings.url + endpoint
@@ -45,11 +46,13 @@ class Util:
                 else:
                     return {'status': 'error',
                             'message': self.settings.get_error_msg(
-                                body.get('code'))}
+                                body.get('code')),
+                            "response": req.json()}
             return
         else:
             return {"status": "error",
-                    "message": self.settings.get_error_msg(req.status_code)}
+                    "message": self.settings.get_error_msg(req.status_code),
+                    "response": req.json()}
 
     def encrypt(self, message):
 
