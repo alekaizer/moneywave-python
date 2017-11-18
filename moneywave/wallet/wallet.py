@@ -9,7 +9,9 @@ class Wallet:
         self.transfer = Transfer(util)
 
     def get_balance(self):
-        pass
+        return self.util.send_request(self.util.settings.get_balance, {})
 
-    def create_sub_wallet(self):
-        pass
+    def create_sub_wallet(self, name, lock_code, user_ref, currency):
+        data = {"name": name, "lock_code": lock_code, "user_ref": user_ref,
+                'currency': currency}
+        return self.util.send_request(self.util.settings.create_wallet, data)
