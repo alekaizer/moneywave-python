@@ -12,10 +12,11 @@ class Util:
 
     def __get_auth(self):
         headers = {"Accept": "application/json"}
+
         response = requests.post(self.resolve_url(self.settings.access_token),
                                  headers=headers,
-                                 params={"apiKey": self.settings.api_key,
-                                         'secret': self.settings.secret_key}
+                                 data={"apiKey": self.settings.api_key,
+                                       'secret': self.settings.secret_key}
                                  )
         if response.status_code == 200:
             body = response.json()
