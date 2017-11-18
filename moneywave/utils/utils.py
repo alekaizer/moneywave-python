@@ -29,11 +29,14 @@ class Util:
     def resolve_url(self, endpoint):
         return self.settings.url + endpoint
 
-    def send_request(self, endpoint, data):
+    def send_request(self, endpoint, data, method="post"):
         headers = {"Accept": "application/json",
                    "Authorization": self.token}
-        req = requests.post(self.resolve_url(endpoint), data=json.dumps(data),
-                            headers=headers)
+        if method == "get":
+            req = requests.get(self.resolve_url(endpoint), headers=headers)
+        else:
+            req = requests.post(self.resolve_url(endpoint), data=data,
+                                headers=headers)
         if req.status_code == 200:
             body = req.json()
             if 'status' in body:
