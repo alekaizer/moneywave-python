@@ -59,7 +59,7 @@ disburse_response_codes = {
 
 
 class Settings:
-    def __init__(self, api_key, secret_key, mode="live"):
+    def __init__(self, api_key, secret_key, mode):
         self.api_key = api_key
         self.secret_key = secret_key
 
