@@ -43,7 +43,10 @@ class Util:
             body = req.json()
             if 'status' in body:
                 if body.get('status') == "success":
-                    return body
+                    if 'data' in body:
+                        return body.get('data')
+                    else:
+                        return body
                 else:
                     return {'status': 'error',
                             'message': self.settings.get_error_msg(
