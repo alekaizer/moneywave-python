@@ -43,19 +43,19 @@ class Funding:
                                       data)
 
     def card_to_wallet(self, first_name, last_name, phone_number, email,
-                       recipient, recipient_id, card_no, expiry_year,
-                       expiry_month, cvv, amount, fee, redirect_url, medium,
+                       recipient_id, card_no, expiry_month,
+                       expiry_year, cvv, amount, fee, redirect_url, medium,
                        narration=None, pin=None):
-        is_verve, is_mastercard = self.card_details(card_no)
+        is_verve, is_mastercard = self.check_card_type(card_no)
         if is_verve and not pin:
             raise Exception('Verve cards require PIN value, please set the '
                             'argument')
         data = {"firstname": first_name, "lastname": last_name, "email": email,
-                "phonenumber": phone_number, "recipien": recipient,
+                "phonenumber": phone_number, "recipient": "wallet",
                 "recipient_id": recipient_id, "card_no": card_no,
                 "expiry_month": expiry_month, "expiry_year": expiry_year,
                 "cvv": cvv, "apiKey": self.util.settings.api_key,
-                "medium": medium,
+                "medium": medium, "charge_with": "card",
                 "fee": fee, "amount": amount, "redirecturl": redirect_url}
         if narration:
             data['narration'] = narration
@@ -64,8 +64,24 @@ class Funding:
         if is_mastercard:
             data['charge_with'] = "card"
             data['charge_auth'] = 'PIN'
+        print(data)
         return self.util.send_request(self.util.settings.funding_pay, data)
 
     def card_details(self, card_number):
         data = {"cardNumber": card_number}
         return self.util.send_request(self.util.settings.card_enquiry, data)
+
+    def check_card_type(self, card_no):
+        response = self.util.send_request(self.util.settings.card_enquiry,
+                                          {"cardNumber": card_no})
+        is_verve, is_local_mastercard = False, False
+        if 'data' in response:
+            print("CARD INFOS", response.get('data'))
+            if response.get('data').get('cardType') == "VERVE":
+                is_verve = True
+            elif response.get('data').get(
+                    'cardType') == "LOCAL" and response.get('data').get(
+                    'cardBrand') == "MASTERCARD":
+                is_local_mastercard = True
+
+        return is_verve, is_local_mastercard
