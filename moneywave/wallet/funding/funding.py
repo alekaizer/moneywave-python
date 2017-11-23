@@ -64,7 +64,7 @@ class Funding:
         if is_mastercard:
             data['charge_with'] = "card"
             data['charge_auth'] = 'PIN'
-        print(data)
+
         return self.util.send_request(self.util.settings.funding_pay, data)
 
     def card_details(self, card_number):
@@ -77,10 +77,10 @@ class Funding:
         is_verve, is_local_mastercard = False, False
         if 'data' in response:
             print("CARD INFOS", response.get('data'))
-            if response.get('data').get('cardType') == "VERVE":
+            if response.get('data').get('cardBrand') == "MAESTRO":
                 is_verve = True
             elif response.get('data').get(
-                    'cardType') == "LOCAL" and response.get('data').get(
+                    'countryOfIssueISO') == "NG" and response.get('data').get(
                     'cardBrand') == "MASTERCARD":
                 is_local_mastercard = True
 
