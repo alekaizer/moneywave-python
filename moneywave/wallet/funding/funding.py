@@ -67,6 +67,19 @@ class Funding:
 
         return self.util.send_request(self.util.settings.funding_pay, data)
 
+    def card_to_wallet_with_token(self, first_name, last_name, phone_number, email,
+                       recipient_id, card_token, amount, fee, redirect_url, medium):
+
+        data = {"firstname": first_name, "lastname": last_name, "email": email,
+                "phonenumber": phone_number, "recipient": "wallet",
+                "recipient_id": recipient_id, "card_token": card_token,
+                "apiKey": self.util.settings.api_key, "medium": medium,
+                "charge_with": "tokenized_card", "fee": fee, "amount": amount,
+                "redirecturl": redirect_url}
+        print(data, "\n\n")
+        # URL = "https://moneywave.herokuapp.com/v1/transfer"
+        return self.util.send_request(self.util.settings.funding_pay, data)
+
     def card_details(self, card_number):
         data = {"cardNumber": card_number}
         return self.util.send_request(self.util.settings.card_enquiry, data)
