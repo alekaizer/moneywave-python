@@ -3,7 +3,10 @@ import json
 
 import requests
 from Crypto.Cipher import DES3
+from datetime import datetime
 
+
+redis = {}
 
 class Util:
     def __init__(self, settings):
@@ -22,6 +25,7 @@ class Util:
             body = response.json()
             if 'token' in body:
                 self.token = body.get('token')
+                redis["flw_token:latest"] = datetime.now().timestamp()
         else:
             self.token = None
 
@@ -32,6 +36,13 @@ class Util:
         return self.settings.url + endpoint
 
     def send_request(self, endpoint, data, method="post"):
+        latest_token = redis.get("flw_token:latest")
+        if latest_token:
+            l = float(redis.get("flw_token:latest").decode())
+            delta = datetime.now().timestamp() - l
+            if delta >= 7000000:
+                self.__get_auth()
+                redis["flw_token:latest"] = datetime.now().timestamp()
         headers = {"Accept": "application/json",
                    "Authorization": self.token}
         if method == "get":
@@ -54,9 +65,11 @@ class Util:
                             "response": req.json()}
             return
         else:
+            body = req.json()
+            error = self.settings.get_error_msg(req.status_code) or body.get('message')
             return {"status": "error",
-                    "message": self.settings.get_error_msg(req.status_code),
-                    "response": req.json()}
+                    "message": error,
+                    "response": body}
 
     def encrypt(self, message):
 

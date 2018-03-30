@@ -92,4 +92,4 @@ class Settings:
     # noinspection PyMethodMayBeStatic
     def get_error_msg(self, code):
         return charge_response_codes.get(code) or disburse_response_codes.get(
-            code) or 'Unknown Error'
+            code) or None
