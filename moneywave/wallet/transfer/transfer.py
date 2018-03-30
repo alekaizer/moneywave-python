@@ -11,6 +11,18 @@ class Transfer:
 
     def to_account(self, sender_name, ref, account_number,
                    bank_code, amount, currency, lock, narration=None):
+        """
+        :param sender_name: the name of the sender
+        :param ref: unique transaction reference
+        :param account_number: the account number of the recipient
+        :param bank_code: the bankcode of the bank to send money to
+        :param amount: the amount to send to the beneficiary
+        :param currency: the currency to send money in
+        :param lock: the password of your wallet
+        :param narration: Narration is a key for disbursements as it gives more
+         details to your transactions
+        :return:
+        """
         data = {"senderName": sender_name, "accountNumber": account_number,
                 "bankcode": bank_code, "amount": amount, "currency": currency,
                 "ref": ref, "lock": lock}
