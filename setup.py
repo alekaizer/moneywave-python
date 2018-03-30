@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='moneywave',
-    version='v1.1',
+    version='v1.2',
     packages=['moneywave', 'moneywave.utils', 'moneywave.wallet',
               'moneywave.wallet.funding', 'moneywave.wallet.transfer',
               'moneywave.account', 'moneywave.resources',
